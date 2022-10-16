@@ -313,3 +313,146 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+#### `GET /api/like?freetId=id` - Get likes for post
+**Returns**
+
+- An array of the users that liked the post with the id `freetId`
+
+**Throws**
+
+- `403` if user is not logged in
+- `404` if `freetId` is invalid
+
+#### `POST /api/like?freetId=id` - Like a freet
+
+**Returns**
+
+- A success message
+- The updated freet object with the new like
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `freetId` is invalid
+
+#### `DELETE /api/like?freetId=id` - Delete a like
+
+**Returns**
+
+- A success message
+- The updated freet object without the like
+
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if the freetId is invalid
+- `409` if the user hasn't liked the freet
+
+#### `GET /api/follow/:username?` - Get follower list
+
+**Returns**
+
+- An array of the users that follow the user at `username`
+
+**Throws**
+
+- `403` if user is not logged in
+- `404` if `username` is invalid
+
+#### `POST /api/follow/:username?` - follow a user
+
+**Returns**
+
+- A success message
+- The updated user object with the new account followed
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `username` is invalid
+- `411` if `username` is the same as the user
+
+#### `DELETE /api/follow/:username?` - unfollow a user
+
+**Returns**
+
+- A success message
+- The updated user object with the new account followed
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `username` is invalid
+- `409` if the user hasn't followed the account
+
+
+#### `GET /api/flag/:freetId?` - Get all flags
+
+**Returns**
+
+- An array of the flags associated with the post
+
+**Throws**
+
+- `403` if user is not logged in
+- `404` if `freetId` is invalid
+
+#### `POST /api/flag/:freetId?` - add a flag to post
+
+**Body**
+
+- flagType` _{string}_ - The type of flag for the post
+
+**Returns**
+
+- A success message
+- The updated post object with the new flag added
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `freetId` is invalid
+
+#### `DELETE /api/flag/:freetId?` - remove a flag
+
+**Returns**
+
+- A success message
+- The updated post object with the flag removed
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `username` is invalid
+- `409` if the user hasn't added a flag to the post
+
+#### `PUT /api/flag/:freetId?` - change flag type on post
+
+**Body**
+
+- flagType` _{string}_ - The type of flag for the post
+
+**Returns**
+
+- A success message
+- The updated post object with the new flag type added
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `freetId` is invalid
+- `409` if the user hasn't added a flag to the post
+
+
+#### `GET /api/recap/:date?` - Get recap for week starting at given date
+
+**Returns**
+
+- An object representing the recap based at the given date
+
+**Throws**
+
+- `403` if user is not logged in
+- `404` if `date` is invalid (incorrect date format or invalid date)
