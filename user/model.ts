@@ -32,7 +32,7 @@ const UserSchema = new Schema({
   dateJoined: {
     type: Date,
     required: true
-  }
+  },
 });
 
 const UserModel = model<User>('User', UserSchema);

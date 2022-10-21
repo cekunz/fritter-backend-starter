@@ -41,7 +41,11 @@ const formsAndHandlers = {
   'delete-freet': deleteFreet,
   'send-like': sendLike,
   'delete-like': deleteLike,
-  'see-likes-for-freet': viewLikesByFreet, 
+  'see-likes-for-freet': viewLikesByFreet,
+  'view-followers-by-user': viewFollowersbyUser,
+  'view-following-by-user': viewFollowingbyUser,
+  'follow-user': followUser,
+  'unfollow-user': unfollowUser,
 };
 
 

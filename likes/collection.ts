@@ -15,9 +15,7 @@ import FreetCollection from '../freet/collection';
     * Get all the likes for a given Freet
     *
     * @param {string} freetId - The id of the given freet
-    * @return {Promise<Array<string>>} - An array of all of the users who have liked the Freet
-    * 
-    * freetId: Types.ObjectId | string
+    * @return {Promise<Array<string>>} - An array of all of the users who have liked the Freet 
     */
     static async findLikesByFreet(freetId: Types.ObjectId | string | undefined): Promise<Array<string>> {
         const freet: Freet = await FreetCollection.findOne(freetId);

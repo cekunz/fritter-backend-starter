@@ -9,7 +9,7 @@ import type {User} from '../user/model';
 // Type definition for Freet on the backend
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  likes: Set<string>;
+  likes: Array<string>;
 };
 
 const LikeSchema = new Schema<Like>({
@@ -19,5 +19,5 @@ const LikeSchema = new Schema<Like>({
   }
 });
 
-const LikeModel = model<Like>('Freet', LikeSchema);
+const LikeModel = model<Like>('Like', LikeSchema);
 export default LikeModel;

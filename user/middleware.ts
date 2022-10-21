@@ -60,6 +60,19 @@ const isValidPassword = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
+ * Checks if the userID exists in the database
+ */
+const isUserIDCreated = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = (req.query.userId as string) ?? undefined;
+  const user = await UserCollection.findOneByUserId(userId);
+
+  if (user !== undefined && user !== null) {
+    next();
+  } else {
+    res.status(404).json({error: 'Invalid user ID provided.'});
+  }
+};
+/**
  * Checks if a user with username and password in req.body exists
  */
 const isAccountExists = async (req: Request, res: Response, next: NextFunction) => {
@@ -157,6 +170,7 @@ export {
   isCurrentSessionUserExists,
   isUserLoggedIn,
   isUserLoggedOut,
+  isUserIDCreated,
   isUsernameNotAlreadyInUse,
   isAccountExists,
   isAuthorExists,
