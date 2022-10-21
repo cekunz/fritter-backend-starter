@@ -46,6 +46,9 @@ const formsAndHandlers = {
   'view-following-by-user': viewFollowingbyUser,
   'follow-user': followUser,
   'unfollow-user': unfollowUser,
+  'add-flag': addFlag,
+  'delete-flag': deleteFlag,
+  'find-flags': findFlags,
 };
 
 

@@ -3,7 +3,7 @@ import {Types} from 'mongoose';
 import FreetCollection from '../freet/collection';
 
 /**
- * Checks if a freet with freetId is req.params exists
+ * Checks if a freet with freetId in req.params exists
  */
 const isFreetExists = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.freetId);
@@ -19,6 +19,25 @@ const isFreetExists = async (req: Request, res: Response, next: NextFunction) =>
 
   next();
 };
+
+/**
+ * Checks if a freet with freetId in req.body exists
+ */
+ const isFreetExistsBody = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.body.id);
+  const freet = validFormat ? await FreetCollection.findOne(req.body.id) : '';
+  if (!freet) {
+    res.status(404).json({
+      error: {
+        freetNotFound: `Freet with freet ID ${req.params.freetId} does not exist.`
+      }
+    });
+    return;
+  }
+
+  next();
+};
+
 
 /**
  * Checks if the content of the freet in req.body is valid, i.e not a stream of empty
@@ -62,5 +81,6 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
 export {
   isValidFreetContent,
   isFreetExists,
+  isFreetExistsBody,
   isValidFreetModifier
 };

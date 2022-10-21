@@ -14,7 +14,7 @@ import FreetCollection from '../freet/collection';
     /**
     * Get all the users that follow a specific user
     *
-    * @param {string} userId - The id of the given freet
+    * @param {string} userId - The id of the given user
     * @return {Promise<Array<User>>} - An array of all of the users who follow userID
     */
     static async findFollowingForUser(userId: Types.ObjectId | string): Promise<Array<User>> {
@@ -27,7 +27,7 @@ import FreetCollection from '../freet/collection';
     /**
     * Get all the users that a specific user follows
     *
-    * @param {string} userId - The id of the given freet
+    * @param {string} userId - The id of the given user
     * @return {Promise<Array<User>>} - An array of all of the users who the user associated with UserId follows
     */
      static async findUsersFollowed(userId: Types.ObjectId | string): Promise<Array<User>> {
@@ -48,7 +48,7 @@ import FreetCollection from '../freet/collection';
         const followingUser = await UserCollection.findOneByUserId(followerUserId);
         const followedUser = await UserCollection.findOneByUserId(followingUserId);
         const followTime = Date.now(); // use one single date for both the following/being followed
-        
+
         const newFollow = new FollowModel({following:followedUser, follower: followingUser, date:followTime});
         await newFollow.save();  // save to DB
 
