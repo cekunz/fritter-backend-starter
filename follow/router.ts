@@ -1,10 +1,7 @@
-import type {NextFunction, Request, Response} from 'express';
+import type {Request, Response} from 'express';
 import express from 'express';
-// import LikeCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as followValidator from '../follow/middleware';
-// import * as util from './util';
-import {Freet} from '../freet/model';
 import type {User} from '../user/model'
 import FollowCollection from './collection';
 

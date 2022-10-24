@@ -461,7 +461,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `409` if the user hasn't added a flag to the post
 
 
-#### `PUT /api/recap` - Generate recap for the given date
+#### `POST /api/recap` - Generate recap for the given date
 
 **Body**
 
@@ -478,3 +478,38 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if user is not logged in
 - `405` if the date is not available for a recap 
 - `406` if date attributes are formatted incorrectly 
+
+#### `GET /api/focus` - Get all focus settings for user
+
+**Returns**
+
+- List of all focus settings made by current user
+
+**Throws**
+- `403` if user is not logged in
+
+
+#### `POST /api/focus?name=name` - create new focus setting
+
+**Body**
+
+- `features` _{string}_ - The features to include in the setting
+
+**Returns**
+
+- The newly created focus object
+
+**Throws**
+- `403` if user is not logged in
+- `405` if a setting already exists with that name
+
+#### `DELETE /api/focus?name=name` - delete a focus setting
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `405` if the user doesn't have a focus setting called `name`

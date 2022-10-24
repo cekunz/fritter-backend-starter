@@ -51,6 +51,9 @@ const formsAndHandlers = {
   'find-flags': findFlags,
   'edit-flag': editFlag,
   'get-recap': getRecap,
+  'create-focus': createFocus,
+  'delete-focus': deleteFocus,
+  'get-focus': getFocus,
 };
 
 

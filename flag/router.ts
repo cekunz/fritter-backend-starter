@@ -1,12 +1,9 @@
 
-import type {NextFunction, Request, Response} from 'express';
+import type {Request, Response} from 'express';
 import express from 'express';
-// import LikeCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as flagValidator from './middleware';
-// import * as util from './util';
-// import {Freet} from '../freet/model';
 import type {Flag} from './model'
 import FlagCollection from './collection';
 
@@ -41,7 +38,7 @@ router.get(
 
 
 /**
- * Flag a post
+ * Add a Flag to a post
  *
  * @name POST /api/flag?freetId=id
  * 
@@ -73,7 +70,7 @@ router.get(
   );
 
   /**
- * Delete a flag
+ * Delete a flag from a post
  *
  * @name DELETE /api/flag?freetId=id
  *

@@ -1,19 +1,13 @@
-import {Types, PopulatedDoc, Document} from 'mongoose';
+import {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type { User } from '../user/model';
-import type { Freet } from '../freet/model';
 import type { Like } from '../likes/model';
-import LikeModel from '../likes/model';
 import { Follow } from '../follow/model';
-import FollowModel from '../follow/model';
-import { likesRouter } from '../likes/router';
 
 
 /**
  * This file defines the properties stored in a Recap
  */
-
-
 // Type definition for Recap on the backend
 export type Recap =  {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation

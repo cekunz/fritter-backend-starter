@@ -15,6 +15,7 @@ import {likesRouter} from '../likes/router';
 import {followRouter} from '../follow/router'
 import {flagRouter} from '../flag/router';
 import {recapRouter} from '../recap/router';
+import {focusRouter} from '../focus/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -84,6 +85,7 @@ app.use('/api/likes', likesRouter);
 app.use('/api/follow', followRouter);
 app.use('/api/flag', flagRouter);
 app.use('/api/recap', recapRouter);
+app.use('/api/focus', focusRouter);
 
 
 // Catch all the other routes and display error message

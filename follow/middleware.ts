@@ -1,9 +1,4 @@
 import type {Request, Response, NextFunction} from 'express';
-import {ObjectId, Types} from 'mongoose';
-import FreetCollection from '../freet/collection';
-import UserCollection from '../user/collection';
-import FollowModel from './model';
-import type {Follow} from './model';
 import FollowCollection from './collection';
 
 

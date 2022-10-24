@@ -7,7 +7,6 @@ import type {Freet} from '../freet/model';
  * This file defines the properties stored in a Like
  */
 
-// Type definition for Freet on the backend
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   user: User;
@@ -17,7 +16,6 @@ export type Like = {
 
 const LikeSchema = new Schema<Like>({
   user: {
-    // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'

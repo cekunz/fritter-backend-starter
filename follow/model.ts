@@ -1,4 +1,4 @@
-import type {Types, PopulatedDoc, Document} from 'mongoose';
+import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type { User } from 'user/model';
 
@@ -6,7 +6,7 @@ import type { User } from 'user/model';
  * This file defines the properties stored in a Follow
  */
 
-// Type definition for Freet on the backend
+// Type definition for Follow on the backend
 export type Follow =  {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     following: User;

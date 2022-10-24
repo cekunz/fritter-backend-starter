@@ -1,5 +1,4 @@
 import type {Request, Response, NextFunction} from 'express';
-import {ObjectId, Types} from 'mongoose';
 import type {Flag} from './model';
 import FlagCollection from './collection';
 /**

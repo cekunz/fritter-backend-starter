@@ -1,7 +1,5 @@
 import type {Request, Response, NextFunction} from 'express';
-import {Types} from 'mongoose';
 import moment from 'moment';
-// import { formatDate } from "../likes/util";
 
 const formatDate = (date: Date): string => moment(date).format('MM DD YYYY, h:mm:ss a');
 

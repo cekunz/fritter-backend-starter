@@ -1,15 +1,14 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Flag} from './model';
-import FollowModel from './model';
 import type {User} from '../user/model';
 import UserCollection from '../user/collection';
-import FreetModel, { Freet } from '../freet/model';
+import { Freet } from '../freet/model';
 import FreetCollection from '../freet/collection';
 import FlagModel from './model';
 
 /**
- * This files contains a class that has the functionality to explore likes
- * stored in MongoDB, including adding and deleting likes.
+ * This files contains a class that has the functionality to explore flags
+ * stored in MongoDB.
  */
  class FlagCollection {
     /**

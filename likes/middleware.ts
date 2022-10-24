@@ -1,10 +1,6 @@
-import type {HydratedDocument, ObjectId, Types} from 'mongoose';
 import {Request, Response, NextFunction, json} from 'express';
-import type {Like} from './model';
 import type {User} from '../user/model';
-import LikeModel from './model';
 import UserCollection from '../user/collection';
-import FreetCollection from 'freet/collection';
 import LikeCollection from './collection';
 
 
@@ -28,7 +24,7 @@ import LikeCollection from './collection';
   
 
 /**
- * Checks if a user is trying to follow themselves
+ * Checks if a user is trying to remove a like without the like existing
  */
  const unlikeWithoutLike = async (req: Request, res: Response, next: NextFunction) => {
     const freetId = (req.params.freetId as string) ?? undefined;

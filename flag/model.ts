@@ -8,7 +8,7 @@ import type { Freet } from 'freet/model';
  */
 
 
-// Type definition for Freet on the backend
+// Type definition for Flag on the backend
 export type Flag =  {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     post: Freet;

@@ -3,8 +3,7 @@ import type {Like} from './model';
 import LikeModel from './model';
 import type {User} from '../user/model';
 import UserCollection from '../user/collection';
-import FreetModel, { Freet } from '../freet/model';
-import FreetCollection from '../freet/collection';
+import FreetModel from '../freet/model';
 import { formatDate } from './util'
 
 /**
