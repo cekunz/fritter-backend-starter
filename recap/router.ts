@@ -40,6 +40,8 @@ function formatDateString(year: string, month: string, day:string): string {
  *
  * @return {Recap} - A recap object for the dates being requested
  * @throws {403} - If the user is not logged in
+ * @throws {405} - If the date is not available for a recap (i.e. in the future)
+ * @throws {406} - if the date is formatted incorrectly
  */
 router.post(
   '/', 

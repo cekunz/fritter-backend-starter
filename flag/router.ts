@@ -12,8 +12,23 @@ import FlagCollection from './collection';
 
 const router = express.Router();
 
+/**
+ * Get flags for a post
+ *
+ * @name GET /api/flag?freetId=id
+ * 
+ * @param {freetId} - the id for the freet being flagged
+ * 
+ * @return {Flag} - The flag object created
+ * @throws {403} - If the user is not logged in
+ * @throws {404} - If the freet ID is invalid
+ */
 router.get(
     '/',
+    [
+      userValidator.isUserLoggedIn,
+      freetValidator.isFreetExistsBody,
+    ],
     async (req: Request, res: Response) => {
         const freetId = (req.body.id as string) ?? undefined;
         const flags: Flag[] = await FlagCollection.getFreetFlags(freetId);
@@ -28,7 +43,7 @@ router.get(
 /**
  * Flag a post
  *
- * @name POST /api/flag/:freetId?
+ * @name POST /api/flag?freetId=id
  * 
  * @param {freetId} - the id for the freet being flagged
  * 
@@ -92,7 +107,7 @@ router.delete(
 /**
  * Modify a flag
  *
- * @name PUT /api/flag?freetID=id
+ * @name PUT /api/flag?freetId=id
  *
  * @param {string} content - the new flag type for the freet
  * @return {Flag} - the updated flag

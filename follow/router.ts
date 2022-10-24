@@ -59,14 +59,14 @@ router.get(
 /**
  * Follow a user
  *
- * @name POST /api/follow/:freetId?
+ * @name POST /api/follow/:userId?
  * 
  * @param {userId} - the id for the user being followed
  * 
  * @return {FollowInfo} - The information stored in the follow
  * @throws {403} - If the user is not logged in
  * @throws {404} - If the user ID is invalid
- * @throws {406} - If the user tries to follow themselves or 
+ * @throws {406} - If the user tries to follow themselves 
  * @throws {407} - If the user already follows the one they are requesting
  */
 router.post(
@@ -89,7 +89,7 @@ router.post(
 /**
  * Unfollow a user
  *
- * @name DELETE /api/follow/:freetId?
+ * @name DELETE /api/follow/:userId?
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in 

@@ -38,9 +38,9 @@ router.get(
 });
 
 /**
- * Send a like
+ * Send a like to a freet
  *
- * @name POST /api/freets/:freetId?
+ * @name POST /api/likes?freetId=id
  * 
  * @param {freetId} - the id for the freet being liked
  * 
@@ -69,7 +69,7 @@ router.post(
 /**
  * Delete a like
  *
- * @name DELETE /api/freets?freetId=id
+ * @name DELETE /api/likes?freetId=id
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in 

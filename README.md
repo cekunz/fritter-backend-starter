@@ -314,17 +314,18 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `GET /api/like?freetId=id` - Get likes for post
+#### `GET /api/likes?freetId=id` - Get likes for a post
 **Returns**
 
-- An array of the users that liked the post with the id `freetId`
+- An unordered array of the users that liked the post with the id `freetId`
 
 **Throws**
 
 - `403` if user is not logged in
 - `404` if `freetId` is invalid
+- 
 
-#### `POST /api/like?freetId=id` - Like a freet
+#### `POST /api/likes?freetId=id` - Like a freet
 
 **Returns**
 
@@ -335,8 +336,9 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 - `404` if `freetId` is invalid
+- `405` if the user has already liked the freet
 
-#### `DELETE /api/like?freetId=id` - Delete a like
+#### `DELETE /api/likes?freetId=id` - Delete a like
 
 **Returns**
 
@@ -348,20 +350,31 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 - `404` if the freetId is invalid
-- `409` if the user hasn't liked the freet
+- `405` if the user hasn't liked the freet
 
-#### `GET /api/follow/:username?` - Get follower list
+#### `GET /api/follow/followers` - Get follower list
 
 **Returns**
 
-- An array of the users that follow the user at `username`
+- An array of the users that follow the user in the session
 
 **Throws**
 
 - `403` if user is not logged in
 - `404` if `username` is invalid
 
-#### `POST /api/follow/:username?` - follow a user
+#### `GET /api/follow/following` - Get following list (users that the session user follows)
+
+**Returns**
+
+- An array of the users that follow the user in the session
+
+**Throws**
+
+- `403` if user is not logged in
+- `404` if `username` is invalid
+
+#### `POST /api/follow/:userId?` - follow a user
 
 **Returns**
 
@@ -371,10 +384,11 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
-- `404` if `username` is invalid
-- `411` if `username` is the same as the user
+- `404` if `userId` is invalid
+- `406` if a user tries to self-follow
+- `407` if the user already follows the user they are requesting to follow
 
-#### `DELETE /api/follow/:username?` - unfollow a user
+#### `DELETE /api/follow/:userId?` - unfollow a user
 
 **Returns**
 
@@ -384,11 +398,11 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
-- `404` if `username` is invalid
-- `409` if the user hasn't followed the account
+- `404` if `userId` is invalid
+- `405` if the user hasn't followed the account
 
 
-#### `GET /api/flag/:freetId?` - Get all flags
+#### `GET /api/flag?freetId=id` - Get all flags
 
 **Returns**
 
@@ -399,11 +413,11 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if user is not logged in
 - `404` if `freetId` is invalid
 
-#### `POST /api/flag/:freetId?` - add a flag to post
+#### `POST /api/flag?freetId=id` - add a flag to post
 
 **Body**
 
-- flagType` _{string}_ - The type of flag for the post
+- `flagType` _{string}_ - The type of flag for the post
 
 **Returns**
 
@@ -414,8 +428,9 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 - `404` if `freetId` is invalid
+- `405` if the user has already flagged the post
 
-#### `DELETE /api/flag/:freetId?` - remove a flag
+#### `DELETE /api/flag?freetId=id` - remove a flag
 
 **Returns**
 
@@ -428,11 +443,11 @@ This renders the `index.html` file that will be used to interact with the backen
 - `404` if `username` is invalid
 - `409` if the user hasn't added a flag to the post
 
-#### `PUT /api/flag/:freetId?` - change flag type on post
+#### `PUT /api/flag?freetId=id` - change flag type on post
 
 **Body**
 
-- flagType` _{string}_ - The type of flag for the post
+- `flagType` _{string}_ - The type of flag for the post
 
 **Returns**
 
@@ -446,7 +461,13 @@ This renders the `index.html` file that will be used to interact with the backen
 - `409` if the user hasn't added a flag to the post
 
 
-#### `GET /api/recap/:date?` - Get recap for week starting at given date
+#### `PUT /api/recap` - Generate recap for the given date
+
+**Body**
+
+- `year` _{string}_ - The year in the date you want to build a recap for
+- `month` _{string}_ - The month in the date you want to build a recap for
+- `day` _{string}_ - The day in the date you want to build a recap for
 
 **Returns**
 
@@ -455,4 +476,5 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if user is not logged in
-- `404` if `date` is invalid (incorrect date format or invalid date)
+- `405` if the date is not available for a recap 
+- `406` if date attributes are formatted incorrectly 
