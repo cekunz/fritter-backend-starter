@@ -12,7 +12,7 @@ export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   user: User;
   post: Freet;
-  likeDate: Date;
+  likeDate: string;
 };
 
 const LikeSchema = new Schema<Like>({
@@ -28,7 +28,7 @@ const LikeSchema = new Schema<Like>({
     ref: 'Freet'
   },
   likeDate: {
-    type: Date,
+    type: String,
     required: true,
   }
 });

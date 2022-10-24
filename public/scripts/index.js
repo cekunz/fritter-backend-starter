@@ -50,6 +50,7 @@ const formsAndHandlers = {
   'delete-flag': deleteFlag,
   'find-flags': findFlags,
   'edit-flag': editFlag,
+  'get-recap': getRecap,
 };
 
 

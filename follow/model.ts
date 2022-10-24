@@ -11,7 +11,7 @@ export type Follow =  {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     following: User;
     follower: User;
-    date: Date;
+    date: string;
 };
 
 const FollowSchema = new Schema<Follow>({
@@ -25,6 +25,10 @@ const FollowSchema = new Schema<Follow>({
         required: true,
         ref: 'User'
     },
+    date: {
+        type: String,
+        required: true
+    }
 })
 
 const FollowModel = model<Follow>('Follow', FollowSchema);

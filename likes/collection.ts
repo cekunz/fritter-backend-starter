@@ -5,6 +5,7 @@ import type {User} from '../user/model';
 import UserCollection from '../user/collection';
 import FreetModel, { Freet } from '../freet/model';
 import FreetCollection from '../freet/collection';
+import { formatDate } from './util'
 
 /**
  * This files contains a class that has the functionality to explore likes
@@ -15,7 +16,7 @@ import FreetCollection from '../freet/collection';
     * Get all the likes for a given Freet
     *
     * @param {string} freetId - The id of the given freet
-    * @return {Promise<Array<string>>} - An array of all of the users who have liked the Freet 
+    * @return {Promise<Array<User>>} - An array of all of the users who have liked the Freet 
     */
     static async findLikesByFreet(freetId: Types.ObjectId | string | undefined): Promise<Array<User>> {
         const freet = await FreetModel.findOne({_id: freetId});
@@ -25,16 +26,35 @@ import FreetCollection from '../freet/collection';
     }
 
     /**
+    * Get all the likes by a user for a given day
+    *
+    * @param {string} likerId - The id of the user liking the freet
+    * @param {Date} date - The day the likes were sent
+    * @return {Promise<Array<Like>>} - An array of all of likes from thay day
+    */
+     static async findLikesByDay(likerId: Types.ObjectId | string, date: string ): Promise<Array<Like>> {
+        const liker: User = await UserCollection.findOneByUserId(likerId);
+        const likes: Like[] = await LikeModel.find({user: liker});
+        const dayLikes: Like[] = likes.filter((x) => {
+                        const substrings = x.likeDate.split(',');
+                        return (substrings[0] === date);
+                    });
+        return dayLikes; 
+    }
+
+
+    /**
      * Add a like to the collection
      *
-     * @param {Freet} post - the post that the like is being applied to
-     * @param {string} authorId - The id of the user liking the freet
+     * @param {string} freetId - the post that the like is being applied to
+     * @param {string} likerId - The id of the user liking the freet
      * @return {Promise<HydratedDocument<Freet>>} - The new like
      */
     static async addLike(freetId: string, likerId: string): Promise<HydratedDocument<Like>> {
         const freet = await FreetModel.findOne({_id: freetId});
         const liker: User = await UserCollection.findOneByUserId(likerId);
-        const date = Date.now();
+        const date = formatDate(new Date());
+
         const like = new LikeModel({user: liker, post:freet, likeDate: date});
         await like.save()
         

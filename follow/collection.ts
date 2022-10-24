@@ -5,6 +5,7 @@ import type {User} from '../user/model';
 import UserCollection from '../user/collection';
 import FreetModel, { Freet } from '../freet/model';
 import FreetCollection from '../freet/collection';
+import { formatDate } from '../likes/util';
 
 /**
  * This files contains a class that has the functionality to explore likes
@@ -22,6 +23,44 @@ import FreetCollection from '../freet/collection';
         const followerList: Array<Follow> = await FollowModel.find({following: user});
         const followerUsers = followerList.map((x) => x.follower);
         return followerUsers
+    }
+
+    /**
+    * Get all the users that follow a specific user on a specific day
+    *
+    * @param {string} userId - The id of the given user
+    * @return {Promise<Array<Follow>>} - An array of all of the users who follow userID
+    */
+     static async findFollowersForUserbyDate(userId: Types.ObjectId | string, date:string): Promise<Array<Follow>> {
+        const user: User = await UserCollection.findOneByUserId(userId);
+        const followingList: Follow[] = await FollowModel.find({following: user});
+        if (followingList.length === 0) return [];
+
+        const dayFollows: Follow[] = followingList.filter((x) => {
+                const substrings = x.date.split(',');
+                return (substrings[0] === date);
+        });
+
+        return dayFollows
+    }
+
+    /**
+    * Get all the users that a user followed on a specific day
+    *
+    * @param {string} userId - The id of the given user
+    * @return {Promise<Array<Follow>>} - An array of all of the users who follow userID
+    */
+     static async findFollowingForUserbyDate(userId: Types.ObjectId | string, date:string): Promise<Array<Follow>> {
+        const user: User = await UserCollection.findOneByUserId(userId);
+        const followerList: Follow[] = await FollowModel.find({follower: user});
+        if (followerList.length === 0) return [];
+
+        const dayFollows: Follow[] = followerList.filter((x) => {
+                const substrings = x.date.split(',');
+                return (substrings[0] === date);
+        });
+
+        return dayFollows
     }
 
     /**
@@ -44,15 +83,15 @@ import FreetCollection from '../freet/collection';
      * @param {string} followingUserId - the Id of the user to follow
      * @return {Promise<{ following: string; follower: string; date: Date; }>} - The new follow information
      */
-    static async followUser(followerUserId: string, followingUserId: string): Promise<{ following: string; follower: string; date: Date; }> {
+    static async followUser(followerUserId: string, followingUserId: string): Promise<{ following: string; follower: string; date: string; }> {
         const followingUser = await UserCollection.findOneByUserId(followerUserId);
         const followedUser = await UserCollection.findOneByUserId(followingUserId);
-        const followTime = Date.now(); // use one single date for both the following/being followed
+        const followTime = formatDate(new Date()); // use one single date for both the following/being followed
 
         const newFollow = new FollowModel({following:followedUser, follower: followingUser, date:followTime});
         await newFollow.save();  // save to DB
 
-        const followReturnObj = {"following": followedUser.username, "follower": followingUser.username, "date": new Date(followTime)}
+        const followReturnObj = {"following": followedUser.username, "follower": followingUser.username, "date": followTime}
         return followReturnObj;
     }
 

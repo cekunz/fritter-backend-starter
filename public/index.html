@@ -10,6 +10,7 @@
   <script src="/scripts/likes.js"></script>
   <script src="/scripts/follow.js"></script>
   <script src="scripts/flag.js"></script>
+  <script src="scripts/recap.js"></script>
   <script src="/scripts/index.js"></script>
 </head>
 
@@ -74,6 +75,23 @@
         <form id="sign-out">
           <h3>Sign Out</h3>
           <input type="submit" value="Sign out">
+        </form>
+
+        <form id="get-recap">
+          <h3>Get Recap for Day</h3>
+          <div>
+            <label for="year">Start Year (XXXX):</label>
+            <input id="year" name="year">
+          </div> 
+          <div>
+            <label for="month">Start Month:</label>
+            <input id="month" name="month">
+          </div> 
+          <div>
+            <label for="day">Start Day:</label>
+            <input id="day" name="day">
+          </div> 
+          <input type="submit" value="Get Recap">
         </form>
 
         <form id="follow-user">
