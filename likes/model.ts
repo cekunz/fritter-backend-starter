@@ -1,6 +1,7 @@
 import type {Types, PopulatedDoc, Document} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
+import type {Freet} from '../freet/model';
 
 /**
  * This file defines the properties stored in a Like
@@ -9,12 +10,25 @@ import type {User} from '../user/model';
 // Type definition for Freet on the backend
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  likes: Array<string>;
+  user: User;
+  post: Freet;
+  likeDate: Date;
 };
 
 const LikeSchema = new Schema<Like>({
-  likes: {
-    type: [String],
+  user: {
+    // Use Types.ObjectId outside of the schema
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  post: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Freet'
+  },
+  likeDate: {
+    type: Date,
     required: true,
   }
 });

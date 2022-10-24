@@ -49,6 +49,7 @@ const formsAndHandlers = {
   'add-flag': addFlag,
   'delete-flag': deleteFlag,
   'find-flags': findFlags,
+  'edit-flag': editFlag,
 };
 
 

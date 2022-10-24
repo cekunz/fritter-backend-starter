@@ -28,7 +28,7 @@ const FlagSchema = new Schema<Flag>({
         ref: 'User'
     },
     flagType: {
-        type: String,  // check!!!!
+        type: String,  
         required: true
     }
 })

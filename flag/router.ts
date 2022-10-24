@@ -35,12 +35,14 @@ router.get(
  * @return {Flag} - The flag object created
  * @throws {403} - If the user is not logged in
  * @throws {404} - If the freet ID is invalid
+ * @throws {405} - If the user has already flagged the post
  */
  router.post(
     '/',
     [
       userValidator.isUserLoggedIn,
       freetValidator.isFreetExistsBody,
+      flagValidator.doubleFlag,
     ],
     async (req: Request, res: Response) => {
       const freetId = (req.body.id as string) ?? undefined;
@@ -69,11 +71,11 @@ router.delete(
     '/',
     [
       userValidator.isUserLoggedIn,
-      freetValidator.isFreetExistsBody,
+      freetValidator.isFreetExistsQuery,
       flagValidator.unflagWithoutFlagging,
     ],
     async (req: Request, res: Response) => {
-      const freetId = (req.body.id as string) ?? undefined;
+      const freetId = (req.query.freetId as string) ?? undefined;
       const flaggerId = req.session.userId;
       const removedFlag = await FlagCollection.removeFlag(flaggerId, freetId);
       if (removedFlag) {
@@ -85,6 +87,34 @@ router.delete(
       }
         
     });
+
+
+/**
+ * Modify a flag
+ *
+ * @name PUT /api/flag?freetID=id
+ *
+ * @param {string} content - the new flag type for the freet
+ * @return {Flag} - the updated flag
+ * @throws {403} - if the user is not logged in 
+ * @throws {404} - If the freetId is not valid
+ * @throws {405} - If the user has not flagged the freet
+ */
+router.put(
+    '/',
+    [
+      userValidator.isUserLoggedIn,
+      freetValidator.isFreetExistsBody,
+      flagValidator.unflagWithoutFlagging,
+    ],
+    async (req: Request, res: Response) => {
+      const flag = await FlagCollection.updateFlagType(req.session.userId, req.body.id, req.body.content);
+      res.status(200).json({
+        message: 'Your flag type was updated successfully.',
+        freet: flag
+      });
+    }
+  );
   
 
 export {router as flagRouter};

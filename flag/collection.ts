@@ -51,9 +51,26 @@ import FlagModel from './model';
       static async removeFlag(userId: Types.ObjectId | string, freetId: Types.ObjectId | string): Promise<Boolean> {
         const user: User = await UserCollection.findOneByUserId(userId);
         const post: Freet = await FreetCollection.findOne(freetId);
-        const flag = await FlagModel.deleteOne({user:user, post: post});
+        const flag = await FlagModel.deleteMany({user:user, post: post});
         return flag !== null;
     }
+
+    /**
+    * Modify flag on a freet
+    *
+    * @param {string} freetId - The id of the given freet
+    * @return {Promise<Flag>} - An array of all of the flags associated with the post
+    */
+     static async updateFlagType(userId: Types.ObjectId | string, freetId: Types.ObjectId | string, flagType: string): Promise<Flag> {
+        const user: User = await UserCollection.findOneByUserId(userId);
+        const post: Freet = await FreetCollection.findOne(freetId);
+        const flag = await FlagModel.findOne({user: user, post:post});
+        flag.flagType = flagType;
+        await flag.save()
+
+        return flag;
+    }
+
 
 }
 export default FlagCollection

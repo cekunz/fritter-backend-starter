@@ -17,9 +17,11 @@ import FreetCollection from '../freet/collection';
     * @param {string} freetId - The id of the given freet
     * @return {Promise<Array<string>>} - An array of all of the users who have liked the Freet 
     */
-    static async findLikesByFreet(freetId: Types.ObjectId | string | undefined): Promise<Array<string>> {
-        const freet: Freet = await FreetCollection.findOne(freetId);
-        return freet.likes;
+    static async findLikesByFreet(freetId: Types.ObjectId | string | undefined): Promise<Array<User>> {
+        const freet = await FreetModel.findOne({_id: freetId});
+        const likes: Like[] = await LikeModel.find({post: freet});
+        const userLikes: User[] = likes.map((x) => x.user);
+        return userLikes;
     }
 
     /**
@@ -27,18 +29,16 @@ import FreetCollection from '../freet/collection';
      *
      * @param {Freet} post - the post that the like is being applied to
      * @param {string} authorId - The id of the user liking the freet
-     * @return {Promise<HydratedDocument<Freet>>} - The modified freet
+     * @return {Promise<HydratedDocument<Freet>>} - The new like
      */
-    static async addLike(freetId: string, likerId: string): Promise<HydratedDocument<Freet>> {
+    static async addLike(freetId: string, likerId: string): Promise<HydratedDocument<Like>> {
         const freet = await FreetModel.findOne({_id: freetId});
         const liker: User = await UserCollection.findOneByUserId(likerId);
-        const likes = freet.likes;
-        if (!likes.includes(liker.username)) {
-            likes.push(liker.username);
-            freet.likes = likes;
-            await freet.save();
-        }
-        return freet;
+        const date = Date.now();
+        const like = new LikeModel({user: liker, post:freet, likeDate: date});
+        await like.save()
+        
+        return like;
     }
 
     /**
@@ -48,20 +48,12 @@ import FreetCollection from '../freet/collection';
      * @param {string} likerId - The id of the user liking the freet
      * @return {Promise<HydratedDocument<Freet>>} - The modified freet
      */
-     static async removeLike(freetId: string, likerId: string): Promise<HydratedDocument<Freet>> {
-         const freet = await FreetModel.findOne({_id: freetId});
+     static async removeLike(freetId: string, likerId: string): Promise<Boolean> {
+        const freet = await FreetModel.findOne({_id: freetId});
         const liker: User = await UserCollection.findOneByUserId(likerId);
-        const likes = freet.likes;
-        if (likes.includes(liker.username)) {
-            const index = likes.indexOf(liker.username);
-            if (index > -1) {
-                likes.splice(index, 1);
-              }
-            freet.likes = likes;
-            await freet.save();
-            return freet;
-        } else return undefined
-        
+
+        const like = await LikeModel.deleteMany({user:liker, post: freet});
+        return like !== null;
     }
 }
 export default LikeCollection

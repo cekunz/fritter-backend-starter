@@ -38,6 +38,24 @@ const isFreetExists = async (req: Request, res: Response, next: NextFunction) =>
   next();
 };
 
+/**
+ * Checks if a freet with freetId in req.quert exists
+ */
+ const isFreetExistsQuery = async (req: Request, res: Response, next: NextFunction) => {
+  const id = (req.query.freetId as string) ?? undefined
+  const freet = await FreetCollection.findOne(id);
+  if (!freet) {
+    res.status(404).json({
+      error: {
+        freetNotFound: `Freet with freet ID ${req.params.freetId} does not exist.`
+      }
+    });
+    return;
+  }
+
+  next();
+};
+
 
 /**
  * Checks if the content of the freet in req.body is valid, i.e not a stream of empty
@@ -82,5 +100,6 @@ export {
   isValidFreetContent,
   isFreetExists,
   isFreetExistsBody,
-  isValidFreetModifier
+  isFreetExistsQuery,
+  isValidFreetModifier,
 };
